@@ -262,3 +262,22 @@
     } else { done(); }
   }
 })();
+
+/* ===== DARK MODE TOGGLE ===== */
+(function () {
+  var btn = document.querySelector(".theme-btn");
+  var root = document.documentElement;
+  function apply(t) {
+    root.setAttribute("data-theme", t);
+    if (btn) {
+      btn.setAttribute("aria-pressed", String(t === "dark"));
+      btn.setAttribute("aria-label", t === "dark" ? "Switch to light mode" : "Switch to dark mode");
+    }
+  }
+  apply(root.getAttribute("data-theme") || "light");
+  if (btn) btn.addEventListener("click", function () {
+    var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    apply(next);
+    try { localStorage.setItem("theme", next); } catch (e) {}
+  });
+})();
